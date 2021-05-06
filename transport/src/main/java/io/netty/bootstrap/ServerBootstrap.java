@@ -15,23 +15,7 @@
  */
 package io.netty.bootstrap;
 
-import static java.util.Objects.requireNonNull;
-
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelConfig;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.ChannelPipeline;
-import io.netty.channel.ChannelPromise;
-import io.netty.channel.EventLoop;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.ReflectiveServerChannelFactory;
-import io.netty.channel.ServerChannel;
-import io.netty.channel.ServerChannelFactory;
+import io.netty.channel.*;
 import io.netty.util.AttributeKey;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
@@ -41,6 +25,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * {@link Bootstrap} sub-class which allows easy bootstrap of {@link ServerChannel}
@@ -142,7 +128,7 @@ public class ServerBootstrap extends AbstractBootstrap<ServerBootstrap, ServerCh
      * {@link Channel} implementation has no no-args constructor.
      */
     public ServerBootstrap channel(Class<? extends ServerChannel> channelClass) {
-        requireNonNull(channelClass, "channelClass");
+        requireNonNull(channelClass, "channelClass");//为空判断
         return channelFactory(new ReflectiveServerChannelFactory<ServerChannel>(channelClass));
     }
 

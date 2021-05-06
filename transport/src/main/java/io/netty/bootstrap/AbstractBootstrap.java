@@ -16,18 +16,9 @@
 
 package io.netty.bootstrap;
 
-import static java.util.Objects.requireNonNull;
-
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelOption;
-import io.netty.channel.ChannelPromise;
-import io.netty.channel.EventLoop;
-import io.netty.channel.EventLoopGroup;
-import io.netty.util.internal.SocketUtils;
+import io.netty.channel.*;
 import io.netty.util.AttributeKey;
+import io.netty.util.internal.SocketUtils;
 import io.netty.util.internal.StringUtil;
 import io.netty.util.internal.logging.InternalLogger;
 
@@ -39,6 +30,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * {@link AbstractBootstrap} is a helper class that makes it easy to bootstrap a {@link Channel}. It support
@@ -255,7 +248,7 @@ public abstract class AbstractBootstrap<B extends AbstractBootstrap<B, C, F>, C 
     final ChannelFuture initAndRegister() {
         EventLoop loop = group.next();
         final Channel channel;
-        try {
+        try {//使用工厂创建channel
             channel = newChannel(loop);
         } catch (Throwable t) {
             return new FailedChannel(loop).newFailedFuture(t);

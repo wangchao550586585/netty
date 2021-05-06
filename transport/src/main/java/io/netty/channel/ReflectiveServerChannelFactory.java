@@ -16,11 +16,11 @@
 
 package io.netty.channel;
 
-import static java.util.Objects.requireNonNull;
-
 import io.netty.util.internal.StringUtil;
 
 import java.lang.reflect.Constructor;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * A {@link ChannelFactory} that instantiates a new {@link ServerChannel} by invoking its default constructor
@@ -32,7 +32,7 @@ public final class ReflectiveServerChannelFactory<T extends ServerChannel> imple
 
     public ReflectiveServerChannelFactory(Class<? extends T> clazz) {
         requireNonNull(clazz, "clazz");
-        try {
+        try {//获取构造
             this.constructor = clazz.getConstructor(EventLoop.class, EventLoopGroup.class);
         } catch (NoSuchMethodException e) {
             throw new IllegalArgumentException("Class " + StringUtil.simpleClassName(clazz) +
@@ -42,7 +42,7 @@ public final class ReflectiveServerChannelFactory<T extends ServerChannel> imple
 
     @Override
     public T newChannel(EventLoop eventLoop, EventLoopGroup childEventLoopGroup) {
-        try {
+        try {  //创建对象
             return constructor
                     .newInstance(eventLoop, childEventLoopGroup);
         } catch (Throwable t) {
