@@ -346,7 +346,7 @@
   </properties>
 
   <modules>
-    <module>all</module>
+ <!--   <module>all</module>-->
     <module>dev-tools</module>
     <module>common</module>
     <module>buffer</module>
@@ -364,18 +364,18 @@
     <module>codec-xml</module>
     <module>resolver</module>
     <module>resolver-dns</module>
-    <module>resolver-dns-native-macos</module>
+<!--    <module>resolver-dns-native-macos</module>-->
     <module>tarball</module>
     <module>transport</module>
-    <module>transport-native-unix-common-tests</module>
+   <!-- <module>transport-native-unix-common-tests</module>
     <module>transport-native-unix-common</module>
     <module>transport-native-epoll</module>
-    <module>transport-native-kqueue</module>
+    <module>transport-native-kqueue</module>-->
     <module>transport-sctp</module>
     <module>handler</module>
     <module>handler-proxy</module>
     <module>example</module>
-    <module>testsuite</module>
+   <!-- <module>testsuite</module>
     <module>testsuite-autobahn</module>
     <module>testsuite-http2</module>
     <module>testsuite-osgi</module>
@@ -384,7 +384,7 @@
     <module>testsuite-native-image</module>
     <module>testsuite-native-image-client</module>
     <module>testsuite-native-image-client-runtime-init</module>
-    <module>transport-blockhound-tests</module>
+    <module>transport-blockhound-tests</module>-->
     <module>microbench</module>
     <module>bom</module>
   </modules>
@@ -452,7 +452,7 @@
         <groupId>${project.groupId}</groupId>
         <artifactId>${tcnative.artifactId}</artifactId>
         <version>${tcnative.version}</version>
-        <classifier>${tcnative.classifier}</classifier>
+        <!-- <classifier>${tcnative.classifier}</classifier>-->
         <scope>compile</scope>
         <optional>true</optional>
       </dependency>
@@ -864,7 +864,7 @@
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>3.1.0</version>
         <executions>
-          <execution>
+          <!--<execution>
             <id>check-style</id>
             <goals>
               <goal>check</goal>
@@ -881,15 +881,15 @@
                 <sourceDirectory>${project.build.testSourceDirectory}</sourceDirectory>
               </sourceDirectories>
             </configuration>
-          </execution>
-          <execution>
+          </execution>-->
+          <!--<execution>
             <id>nohttp-checkstyle-validation</id>
             <phase>validate</phase>
             <configuration>
-              <!-- skip>false</skip -->
+              &lt;!&ndash; skip>false</skip &ndash;&gt;
               <configLocation>nohttp-checkstyle.xml</configLocation>
               <suppressionsLocation>nohttp-checkstyle-suppressions.xml</suppressionsLocation>
-              <!-- propertyExpansion>main.basedir=${main.basedir}</propertyExpansion -->
+              &lt;!&ndash; propertyExpansion>main.basedir=${main.basedir}</propertyExpansion &ndash;&gt;
               <encoding>UTF-8</encoding>
               <sourceDirectories>${basedir}</sourceDirectories>
               <includes>**/*</includes>
@@ -899,7 +899,7 @@
               <goal>check</goal>
             </goals>
             <inherited>false</inherited>
-          </execution>
+          </execution>-->
         </executions>
         <dependencies>
           <dependency>
