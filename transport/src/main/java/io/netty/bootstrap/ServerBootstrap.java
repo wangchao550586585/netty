@@ -165,13 +165,13 @@ public class ServerBootstrap extends AbstractBootstrap<ServerBootstrap, ServerCh
             @Override
             public void initChannel(final Channel ch) {
                 final ChannelPipeline pipeline = ch.pipeline();
-                ChannelHandler handler = config.handler();
+                ChannelHandler handler = config.handler();//.handler()添加的ChannelHandler
                 if (handler != null) {
                     pipeline.addLast(handler);
                 }
 
                 ch.eventLoop().execute(() -> {
-                    pipeline.addLast(new ServerBootstrapAcceptor(
+                    pipeline.addLast(new ServerBootstrapAcceptor(   //添加handler主要用于接收客户端请求
                             ch, currentChildHandler, currentChildOptions, currentChildAttrs));
                     promise.setSuccess();
                 });

@@ -42,6 +42,7 @@ public class MultithreadEventLoopGroup extends MultithreadEventExecutorGroup imp
 
     public static final int DEFAULT_EVENT_LOOP_THREADS;
 
+    //线程数默认cpu核心*2
     static {
         DEFAULT_EVENT_LOOP_THREADS = Math.max(1, SystemPropertyUtil.getInt(
                 "io.netty.eventLoopThreads", NettyRuntime.availableProcessors() * 2));

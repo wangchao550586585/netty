@@ -170,7 +170,7 @@ public interface ChannelFuture extends Future<Void> {
      */
     Channel channel();
 
-    @Override
+    @Override  //覆写方法，修改返回值为ChannelFuture
     ChannelFuture addListener(GenericFutureListener<? extends Future<? super Void>> listener);
 
     @Override
@@ -208,5 +208,6 @@ public interface ChannelFuture extends Future<Void> {
      *     <li>{@link #syncUninterruptibly()}</li>
      * </ul>
      */
+    //标记future是void类型,这样不允许调用addListener(...), sync(), await() 以及它们的几个重载方法
     boolean isVoid();
 }

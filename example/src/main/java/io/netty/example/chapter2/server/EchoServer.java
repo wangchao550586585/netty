@@ -32,7 +32,7 @@ public class EchoServer {
     public void start() throws Exception {
         final EchoServerHandler serverHandler = new EchoServerHandler();
         //(1) 创建EventLoopGroup,来接受和处理新的连接,以进行事件的处理，如接受新连接以及读/写数据
-        EventLoopGroup group = new NioEventLoopGroup();
+        EventLoopGroup group = new NioEventLoopGroup(); //executor
         try {
             //(2) 创建ServerBootstrap,以引导和绑定服务器
             ServerBootstrap b = new ServerBootstrap();
@@ -41,8 +41,9 @@ public class EchoServer {
                     .channel(NioServerSocketChannel.class)  //channel
                     //(4) 使用指定的端口设置套接字地址
                     .localAddress(new InetSocketAddress(port))//设置socket地址
+//                    .handler( )  给NioServerSocketChannel使用
                     //(5) 添加一个EchoServerHandler到于Channel的 ChannelPipeline
-                    .childHandler(new ChannelInitializer<SocketChannel>() {
+                    .childHandler(new ChannelInitializer<SocketChannel>() { //这里设置的handler是给NioSocketChannel 使用的
                         @Override
                         public void initChannel(SocketChannel ch) throws Exception {
                             //EchoServerHandler 被标注为@Shareable，所以我们可以总是使用同样的实例
@@ -51,7 +52,7 @@ public class EchoServer {
                             ch.pipeline().addLast(serverHandler);//使用一个EchoServerHandler 的实例初始化每一个新的Channel
                         }
                     });
-            //(6) 异步地绑定服务器；调用 sync()方法阻塞等待直到绑定完成
+            //(6) 异步地绑定服务器；调用 sync()方法阻塞等待直到绑定完成 Future
             ChannelFuture f = b.bind().sync();
             System.out.println(EchoServer.class.getName() +
                     " started and listening for connections on " + f.channel().localAddress());

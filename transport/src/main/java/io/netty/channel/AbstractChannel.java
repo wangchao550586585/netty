@@ -15,8 +15,6 @@
  */
 package io.netty.channel;
 
-import static java.util.Objects.requireNonNull;
-
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.socket.ChannelOutputShutdownEvent;
 import io.netty.channel.socket.ChannelOutputShutdownException;
@@ -29,16 +27,14 @@ import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
 import java.io.IOException;
-import java.net.ConnectException;
-import java.net.InetSocketAddress;
-import java.net.NoRouteToHostException;
-import java.net.SocketAddress;
-import java.net.SocketException;
+import java.net.*;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.NotYetConnectedException;
 import java.util.NoSuchElementException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.RejectedExecutionException;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * A skeletal {@link Channel} implementation.
@@ -77,9 +73,10 @@ public abstract class AbstractChannel extends DefaultAttributeMap implements Cha
         this.eventLoop = validateEventLoop(eventLoop);
         closeFuture = new CloseFuture(this, eventLoop);
         succeedFuture = new SucceededChannelFuture(this, eventLoop);
+        //每个channel分配唯一id
         id = newId();
         unsafe = newUnsafe();
-        pipeline = newChannelPipeline();
+        pipeline = newChannelPipeline();//创建pipeline
     }
 
     /**

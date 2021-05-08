@@ -15,10 +15,10 @@
  */
 package io.netty.util.concurrent;
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadFactory;
+
+import static java.util.Objects.requireNonNull;
 
 public final class ThreadPerTaskExecutor implements Executor {
     private final ThreadFactory threadFactory;
@@ -30,6 +30,7 @@ public final class ThreadPerTaskExecutor implements Executor {
 
     @Override
     public void execute(Runnable command) {
+        //为每个任务新建线程启动
         threadFactory.newThread(command).start();
     }
 }

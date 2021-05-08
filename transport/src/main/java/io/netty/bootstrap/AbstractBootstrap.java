@@ -248,7 +248,8 @@ public abstract class AbstractBootstrap<B extends AbstractBootstrap<B, C, F>, C 
     final ChannelFuture initAndRegister() {
         EventLoop loop = group.next();
         final Channel channel;
-        try {//使用工厂创建channel
+        try {
+            //使用工厂创建channel
             channel = newChannel(loop);
         } catch (Throwable t) {
             return new FailedChannel(loop).newFailedFuture(t);

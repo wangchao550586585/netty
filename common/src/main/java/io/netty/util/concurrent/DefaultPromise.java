@@ -43,7 +43,9 @@ public class DefaultPromise<V> implements Promise<V> {
             StacklessCancellationException.newInstance(DefaultPromise.class, "cancel(...)"));
     private static final StackTraceElement[] CANCELLATION_STACK = CANCELLATION_CAUSE_HOLDER.cause.getStackTrace();
 
+    // 保存执行结果
     private volatile Object result;
+    // 执行任务的线程池
     private final EventExecutor executor;
 
     // It is fine to not make this volatile as even if we override the value in there it does not matter as
@@ -56,6 +58,7 @@ public class DefaultPromise<V> implements Promise<V> {
      *
      * Threading - synchronized(this). We must support adding listeners when there is no EventExecutor.
      */
+    // 监听者，回调函数，任务结束后（正常或异常结束）执行
     private Object listeners;
     /**
      * Threading - synchronized(this). We are required to hold the monitor to use Java's underlying wait()/notifyAll().

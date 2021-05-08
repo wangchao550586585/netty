@@ -119,6 +119,7 @@ public class MultithreadEventExecutorGroup extends AbstractEventExecutorGroup {
                                             RejectedExecutionHandler rejectedHandler, Object... args) {
         checkPositive(nThreads, "nThreads");
 
+        //设置默认executor
         if (executor == null) {
             executor = new ThreadPerTaskExecutor(new DefaultThreadFactory(getClass()));
         }
@@ -128,6 +129,7 @@ public class MultithreadEventExecutorGroup extends AbstractEventExecutorGroup {
         for (int i = 0; i < nThreads; i ++) {
             boolean success = false;
             try {
+                //实例化EventExecutor
                 children[i] = newChild(executor, maxPendingTasks, rejectedHandler, args);
                 success = true;
             } catch (Exception e) {
@@ -135,6 +137,7 @@ public class MultithreadEventExecutorGroup extends AbstractEventExecutorGroup {
                 throw new IllegalStateException("failed to create a child event executor", e);
             } finally {
                 if (!success) {
+                    //执行失败，则异步关闭
                     for (int j = 0; j < i; j ++) {
                         children[j].shutdownGracefully();
                     }
@@ -142,11 +145,13 @@ public class MultithreadEventExecutorGroup extends AbstractEventExecutorGroup {
                     for (int j = 0; j < i; j ++) {
                         EventExecutor e = children[j];
                         try {
+                            //等待这些线程shutDown
                             while (!e.isTerminated()) {
                                 e.awaitTermination(Integer.MAX_VALUE, TimeUnit.SECONDS);
                             }
                         } catch (InterruptedException interrupted) {
                             // Let the caller handle the interruption.
+                            //出现异常，则中断
                             Thread.currentThread().interrupt();
                             break;
                         }

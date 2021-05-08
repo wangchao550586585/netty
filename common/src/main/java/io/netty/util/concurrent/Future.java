@@ -52,6 +52,7 @@ public interface Future<V> extends java.util.concurrent.Future<V> {
      * specified listener is notified when this future is
      * {@linkplain #isDone() done}.  If this future is already
      * completed, the specified listener is notified immediately.
+     * 添加监听器回调
      */
     Future<V> addListener(GenericFutureListener<? extends Future<? super V>> listener);
 
@@ -88,6 +89,7 @@ public interface Future<V> extends java.util.concurrent.Future<V> {
      * @throws CancellationException if the computation was cancelled
      * @throws {@link java.util.concurrent.CompletionException} if the computation threw an exception.
      * @throws InterruptedException if the current thread was interrupted while waiting
+     * 阻塞等待任务,如果失败抛出异常
      *
      */
     Future<V> sync() throws InterruptedException;
@@ -98,6 +100,7 @@ public interface Future<V> extends java.util.concurrent.Future<V> {
      *
      * @throws CancellationException if the computation was cancelled
      * @throws {@link java.util.concurrent.CompletionException} if the computation threw an exception.
+     * 阻塞等待任务，不响应终端
      */
     Future<V> syncUninterruptibly();
 
@@ -165,6 +168,7 @@ public interface Future<V> extends java.util.concurrent.Future<V> {
      *
      * As it is possible that a {@code null} value is used to mark the future as successful you also need to check
      * if the future is really done with {@link #isDone()} and not rely on the returned {@code null} value.
+     * 获取结果且不阻塞
      */
     V getNow();
 
