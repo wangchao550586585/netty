@@ -123,7 +123,7 @@ public class MultithreadEventExecutorGroup extends AbstractEventExecutorGroup {
         if (executor == null) {
             executor = new ThreadPerTaskExecutor(new DefaultThreadFactory(getClass()));
         }
-
+        //创建EventExecutor
         children = new EventExecutor[nThreads];
         powerOfTwo = isPowerOfTwo(children.length);
         for (int i = 0; i < nThreads; i ++) {
@@ -137,7 +137,7 @@ public class MultithreadEventExecutorGroup extends AbstractEventExecutorGroup {
                 throw new IllegalStateException("failed to create a child event executor", e);
             } finally {
                 if (!success) {
-                    //执行失败，则异步关闭
+                    //执行失败，则异步关闭全部线程
                     for (int j = 0; j < i; j ++) {
                         children[j].shutdownGracefully();
                     }
@@ -165,10 +165,10 @@ public class MultithreadEventExecutorGroup extends AbstractEventExecutorGroup {
                 terminationFuture.setSuccess(null);
             }
         };
-
+        //为每个childer添加线程终止监听器,主要用于查看是否执行成功
         for (EventExecutor e: children) {
             e.terminationFuture().addListener(terminationListener);
-        }
+        } //设置该child集合只读
         readonlyChildren = Collections.unmodifiableList(Arrays.asList(children));
     }
 
@@ -190,7 +190,7 @@ public class MultithreadEventExecutorGroup extends AbstractEventExecutorGroup {
      */
     @Override
     public EventExecutor next() {
-        if (powerOfTwo) {
+        if (powerOfTwo) {//如果是二进制，则直接&操作
             return children[(int) idx.getAndIncrement() & children.length - 1];
         }
         return children[(int) Math.abs(idx.getAndIncrement() % children.length)];

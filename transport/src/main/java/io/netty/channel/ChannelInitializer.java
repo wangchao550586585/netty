@@ -85,7 +85,7 @@ public abstract class ChannelInitializer<C extends Channel> implements ChannelHa
             // Explicitly call exceptionCaught(...) as we removed the handler before calling initChannel(...).
             // We do so to prevent multiple calls to initChannel(...).
             exceptionCaught(ctx, cause);
-        } finally {
+        } finally { //执行完添加handler后,删除自己。
             ChannelPipeline pipeline = ctx.pipeline();
             if (pipeline.context(this) != null) {
                 pipeline.remove(this);

@@ -7,6 +7,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 
 import java.net.InetSocketAddress;
 
@@ -36,12 +38,12 @@ public class EchoServer {
         try {
             //(2) 创建ServerBootstrap,以引导和绑定服务器
             ServerBootstrap b = new ServerBootstrap();
-            b.group(group)      //线程模型
+            b.group(group)      //指定线程模型,这个方法表示子父同一个线程组
                     //(3) 指定所使用的 NIO 传输 Channel
                     .channel(NioServerSocketChannel.class)  //channel
                     //(4) 使用指定的端口设置套接字地址
                     .localAddress(new InetSocketAddress(port))//设置socket地址
-//                    .handler( )  给NioServerSocketChannel使用
+                   .handler(new LoggingHandler(LogLevel.INFO)) //  给NioServerSocketChannel使用,想在 EchoServer 中也指定多个 handler，也可以像右边的 EchoClient 一样使用 ChannelInitializer
                     //(5) 添加一个EchoServerHandler到于Channel的 ChannelPipeline
                     .childHandler(new ChannelInitializer<SocketChannel>() { //这里设置的handler是给NioSocketChannel 使用的
                         @Override
