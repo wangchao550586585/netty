@@ -87,6 +87,7 @@ public class DefaultPromise<V> implements Promise<V> {
         if (setSuccess0(result)) {
             return this;
         }
+        //设置结果失败，直接异常sync
         throw new IllegalStateException("complete already: " + this);
     }
 
@@ -393,6 +394,7 @@ public class DefaultPromise<V> implements Promise<V> {
     @Override
     public Promise<V> sync() throws InterruptedException {
         await();
+        //任务失败，抛异常
         rethrowIfFailed();
         return this;
     }
@@ -537,6 +539,7 @@ public class DefaultPromise<V> implements Promise<V> {
         if (RESULT_UPDATER.compareAndSet(this, null, objResult) ||
             RESULT_UPDATER.compareAndSet(this, UNCANCELLABLE, objResult)) {
             if (checkNotifyWaiters()) {
+                //执行监听回调方法
                 notifyListeners();
             }
             return true;

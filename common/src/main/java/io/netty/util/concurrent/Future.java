@@ -177,6 +177,9 @@ public interface Future<V> extends java.util.concurrent.Future<V> {
      *
      * If the cancellation was successful it will fail the future with a {@link CancellationException}.
      */
+    // 取消任务执行，如果取消成功，任务会因为 CancellationException 异常而导致失败
+    //      也就是 isSuccess()==false，同时上面的 cause() 方法返回 CancellationException 的实例。
+    // mayInterruptIfRunning 说的是：是否对正在执行该任务的线程进行中断(这样才能停止该任务的执行)，
     @Override
     boolean cancel(boolean mayInterruptIfRunning);
 
