@@ -17,6 +17,10 @@ package io.netty.util.concurrent;
 
 /**
  * Special {@link Future} which is writable.
+ *
+ * 所以这里就有两种编程方式，一种是用 await()，等 await() 方法返回后，得到 promise 的执行结果，然后处理它；
+ * 另一种就是提供 Listener 实例，我们不太关心任务什么时候会执行完，只要它执行完了以后会去执行 listener 中的处理方法就行。
+
  */
 public interface Promise<V> extends Future<V> {
 
