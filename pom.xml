@@ -82,6 +82,32 @@
       </properties>
     </profile>
 
+
+    <!-- JDK12 NEW -->
+    <profile>
+      <id>java1.8</id>
+      <activation>
+        <jdk>16</jdk>
+      </activation>
+      <properties>
+        <!-- Not use alpn agent as Java11+ supports alpn out of the box -->
+        <argLine.alpnAgent />
+        <argLine.java9.extras />
+        <!-- Export some stuff which is used during our tests -->
+        <argLine.java9>--illegal-access=deny ${argLine.java9.extras}</argLine.java9>
+        <forbiddenapis.skip>true</forbiddenapis.skip>
+        <!-- Needed because of https://issues.apache.org/jira/browse/MENFORCER-275 -->
+        <enforcer.plugin.version>3.0.0-M3</enforcer.plugin.version>
+        <!-- 1.4.x does not work in Java10+ -->
+        <jboss.marshalling.version>2.0.5.Final</jboss.marshalling.version>
+        <!-- This is the minimum supported by Java12+ -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <!-- pax-exam does not work on latest Java12 EA 22 build -->
+        <skipOsgiTestsuite>true</skipOsgiTestsuite>
+      </properties>
+    </profile>
+
     <!-- Detect if we use GraalVM and if so enable the native image testsuite -->
     <profile>
       <id>graal</id>
@@ -407,7 +433,7 @@
   </properties>
 
   <modules>
-    <module>all</module>
+<!--    <module>all</module>-->
     <module>dev-tools</module>
     <module>common</module>
     <module>buffer</module>
@@ -425,20 +451,20 @@
     <module>codec-xml</module>
     <module>resolver</module>
     <module>resolver-dns</module>
-    <module>resolver-dns-native-macos</module>
+<!--    <module>resolver-dns-native-macos</module>-->
     <module>tarball</module>
     <module>transport</module>
-    <module>transport-native-unix-common-tests</module>
+  <!--  <module>transport-native-unix-common-tests</module>
     <module>transport-native-unix-common</module>
     <module>transport-native-epoll</module>
-    <module>transport-native-kqueue</module>
+    <module>transport-native-kqueue</module>-->
     <module>transport-rxtx</module>
     <module>transport-sctp</module>
     <module>transport-udt</module>
     <module>handler</module>
     <module>handler-proxy</module>
     <module>example</module>
-    <module>testsuite</module>
+   <!-- <module>testsuite</module>
     <module>testsuite-autobahn</module>
     <module>testsuite-http2</module>
     <module>testsuite-osgi</module>
@@ -448,7 +474,7 @@
     <module>testsuite-native-image-client</module>
     <module>testsuite-native-image-client-runtime-init</module>
     <module>transport-blockhound-tests</module>
-    <module>microbench</module>
+    <module>microbench</module>-->
     <module>bom</module>
   </modules>
 
@@ -955,7 +981,7 @@
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>3.1.0</version>
-        <executions>
+        <!--<executions>
           <execution>
             <id>check-style</id>
             <goals>
@@ -978,10 +1004,10 @@
             <id>nohttp-checkstyle-validation</id>
             <phase>validate</phase>
             <configuration>
-              <!-- skip>false</skip -->
+              &lt;!&ndash; skip>false</skip &ndash;&gt;
               <configLocation>nohttp-checkstyle.xml</configLocation>
               <suppressionsLocation>nohttp-checkstyle-suppressions.xml</suppressionsLocation>
-              <!-- propertyExpansion>main.basedir=${main.basedir}</propertyExpansion -->
+              &lt;!&ndash; propertyExpansion>main.basedir=${main.basedir}</propertyExpansion &ndash;&gt;
               <encoding>UTF-8</encoding>
               <sourceDirectories>${basedir}</sourceDirectories>
               <includes>**/*</includes>
@@ -992,7 +1018,7 @@
             </goals>
             <inherited>false</inherited>
           </execution>
-        </executions>
+        </executions>-->
         <dependencies>
           <dependency>
             <groupId>com.puppycrawl.tools</groupId>
