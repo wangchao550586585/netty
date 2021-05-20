@@ -28,6 +28,7 @@ public interface ChannelOutboundHandler extends ChannelHandler {
      * @param localAddress  the {@link SocketAddress} to which it should bound
      * @param promise       the {@link ChannelPromise} to notify once the operation completes
      * @throws Exception    thrown if an error occurs
+     * 监听地址,完成底层io通道的ip地址绑定,若使用Tcp,则只能服务端用
      */
     void bind(ChannelHandlerContext ctx, SocketAddress localAddress, ChannelPromise promise) throws Exception;
 
@@ -39,6 +40,7 @@ public interface ChannelOutboundHandler extends ChannelHandler {
      * @param localAddress      the {@link SocketAddress} which is used as source on connect
      * @param promise           the {@link ChannelPromise} to notify once the operation completes
      * @throws Exception        thrown if an error occurs
+     * 连接服务端,如果使用TCP传输协议,只作用客户端
      */
     void connect(
             ChannelHandlerContext ctx, SocketAddress remoteAddress,
@@ -50,6 +52,7 @@ public interface ChannelOutboundHandler extends ChannelHandler {
      * @param ctx               the {@link ChannelHandlerContext} for which the disconnect operation is made
      * @param promise           the {@link ChannelPromise} to notify once the operation completes
      * @throws Exception        thrown if an error occurs
+     * 断开与服务端连接,如果使用TCP传输协议,只作用客户端
      */
     void disconnect(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception;
 
@@ -59,6 +62,7 @@ public interface ChannelOutboundHandler extends ChannelHandler {
      * @param ctx               the {@link ChannelHandlerContext} for which the close operation is made
      * @param promise           the {@link ChannelPromise} to notify once the operation completes
      * @throws Exception        thrown if an error occurs
+     * 主动关闭通道
      */
     void close(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception;
 
@@ -73,6 +77,7 @@ public interface ChannelOutboundHandler extends ChannelHandler {
 
     /**
      * Intercepts {@link ChannelHandlerContext#read()}.
+     * 底层读取数据
      */
     void read(ChannelHandlerContext ctx) throws Exception;
 
@@ -85,6 +90,7 @@ public interface ChannelOutboundHandler extends ChannelHandler {
      * @param msg               the message to write
      * @param promise           the {@link ChannelPromise} to notify once the operation completes
      * @throws Exception        thrown if an error occurs
+     * 写入数据到底层缓冲区,并不会刷入对端,取决于操作系统
      */
     void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception;
 
@@ -94,6 +100,7 @@ public interface ChannelOutboundHandler extends ChannelHandler {
      *
      * @param ctx               the {@link ChannelHandlerContext} for which the flush operation is made
      * @throws Exception        thrown if an error occurs
+     * 将底层缓冲区数据刷入对端
      */
     void flush(ChannelHandlerContext ctx) throws Exception;
 }

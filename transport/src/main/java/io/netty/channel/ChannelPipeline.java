@@ -232,6 +232,8 @@ public interface ChannelPipeline
      *         if there's an entry with the same name already in the pipeline
      * @throws NullPointerException
      *         if the specified handler is {@code null}
+     *
+     * 头部添加handler
      */
     ChannelPipeline addFirst(String name, ChannelHandler handler);
 
@@ -260,6 +262,7 @@ public interface ChannelPipeline
      *         if there's an entry with the same name already in the pipeline
      * @throws NullPointerException
      *         if the specified handler is {@code null}
+     * 尾部添加handler
      */
     ChannelPipeline addLast(String name, ChannelHandler handler);
 
@@ -292,6 +295,7 @@ public interface ChannelPipeline
      *         if there's an entry with the same name already in the pipeline
      * @throws NullPointerException
      *         if the specified baseName or handler is {@code null}
+     * 在baseName处理器的前面添加handler
      */
     ChannelPipeline addBefore(String baseName, String name, ChannelHandler handler);
 
@@ -328,6 +332,7 @@ public interface ChannelPipeline
      *         if there's an entry with the same name already in the pipeline
      * @throws NullPointerException
      *         if the specified baseName or handler is {@code null}
+     * 在baseName处理器的后面添加handler
      */
     ChannelPipeline addAfter(String baseName, String name, ChannelHandler handler);
 

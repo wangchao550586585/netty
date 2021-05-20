@@ -69,9 +69,12 @@ public abstract class AbstractChannel extends DefaultAttributeMap implements Cha
      *        the parent of this channel. {@code null} if there's no parent.
      */
     protected AbstractChannel(Channel parent) {
+        //定义父通道,对于NioServerSocketChannel来说parent为null,NioSocketChannel为接收到该连接的服务器连接监听通道
         this.parent = parent;
         id = newId();
+        //底层nio通道,完成实际io操作
         unsafe = newUnsafe();
+        //一条通道拥有一条流水线
         pipeline = newChannelPipeline();
     }
 

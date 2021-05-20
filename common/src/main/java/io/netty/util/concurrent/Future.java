@@ -28,11 +28,13 @@ public interface Future<V> extends java.util.concurrent.Future<V> {
     /**
      * Returns {@code true} if and only if the I/O operation was completed
      * successfully.
+     * 异步执行是否成功
      */
     boolean isSuccess();
 
     /**
      * returns {@code true} if and only if the operation can be cancelled via {@link #cancel(boolean)}.
+     * 异步执行是否取消
      */
     boolean isCancellable();
 
@@ -43,6 +45,7 @@ public interface Future<V> extends java.util.concurrent.Future<V> {
      * @return the cause of the failure.
      *         {@code null} if succeeded or this future is not
      *         completed yet.
+     * 获取异步任务异常原因
      */
     Throwable cause();
 
@@ -51,6 +54,7 @@ public interface Future<V> extends java.util.concurrent.Future<V> {
      * specified listener is notified when this future is
      * {@linkplain #isDone() done}.  If this future is already
      * completed, the specified listener is notified immediately.
+     * 增加异步任务执行完成与否的
      */
     Future<V> addListener(GenericFutureListener<? extends Future<? super V>> listener);
 

@@ -179,12 +179,14 @@ public interface ChannelHandler {
 
     /**
      * Gets called after the {@link ChannelHandler} was added to the actual context and it's ready to handle events.
+     * ch.pipeline().addLast(inHandler); 触发
      */
     void handlerAdded(ChannelHandlerContext ctx) throws Exception;
 
     /**
      * Gets called after the {@link ChannelHandler} was removed from the actual context and it doesn't handle events
      * anymore.
+     * netty移除通道上所有的业务处理器
      */
     void handlerRemoved(ChannelHandlerContext ctx) throws Exception;
 

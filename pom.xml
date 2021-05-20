@@ -860,7 +860,7 @@
     </extensions>
 
     <plugins>
-      <plugin>
+     <!-- <plugin>
         <groupId>com.github.siom79.japicmp</groupId>
         <artifactId>japicmp-maven-plugin</artifactId>
         <version>0.14.3</version>
@@ -871,7 +871,7 @@
             <breakBuildOnSourceIncompatibleModifications>true</breakBuildOnSourceIncompatibleModifications>
             <oldVersionPattern>\d+\.\d+\.\d+\.Final</oldVersionPattern>
             <ignoreMissingClassesByRegularExpressions>
-              <!-- ignore everything which is not part of netty itself as the plugin can not handle optional dependencies -->
+              &lt;!&ndash; ignore everything which is not part of netty itself as the plugin can not handle optional dependencies &ndash;&gt;
               <ignoreMissingClassesByRegularExpression>^(?!io\.netty\.).*</ignoreMissingClassesByRegularExpression>
               <ignoreMissingClassesByRegularExpression>^io\.netty\.internal\.tcnative\..*</ignoreMissingClassesByRegularExpression>
             </ignoreMissingClassesByRegularExpressions>
@@ -890,7 +890,7 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
+      </plugin>-->
       <plugin>
         <artifactId>maven-enforcer-plugin</artifactId>
         <version>${enforcer.plugin.version}</version>
