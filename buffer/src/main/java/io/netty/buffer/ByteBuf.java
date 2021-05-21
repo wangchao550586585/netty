@@ -2184,6 +2184,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
      * <p>
      * Also be aware that this method will NOT call {@link #retain()} and so the
      * reference count will NOT be increased.
+     *
+     * 返回buf可读部分切片
      */
     public abstract ByteBuf slice();
 
@@ -2210,6 +2212,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
      * <p>
      * Also be aware that this method will NOT call {@link #retain()} and so the
      * reference count will NOT be increased.
+     * 指定位置切片
      */
     public abstract ByteBuf slice(int index, int length);
 

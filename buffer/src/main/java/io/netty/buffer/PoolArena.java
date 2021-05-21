@@ -644,7 +644,7 @@ abstract class PoolArena<T> extends SizeClasses implements PoolArenaMetric {
         @Override
         protected PooledByteBuf<ByteBuffer> newByteBuf(int maxCapacity) {
             if (HAS_UNSAFE) {
-                return PooledUnsafeDirectByteBuf.newInstance(maxCapacity);
+                return PooledUnsafeDirectByteBuf.newInstance(maxCapacity);//创建buf
             } else {
                 return PooledDirectByteBuf.newInstance(maxCapacity);
             }

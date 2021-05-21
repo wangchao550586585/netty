@@ -103,6 +103,7 @@ public abstract class SimpleChannelInboundHandler<I> extends ChannelInboundHandl
             }
         } finally {
             if (autoRelease && release) {
+                //自动释放
                 ReferenceCountUtil.release(msg);
             }
         }

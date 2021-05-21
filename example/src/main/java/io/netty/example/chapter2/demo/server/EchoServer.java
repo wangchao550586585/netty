@@ -47,7 +47,9 @@ public class EchoServer {
                     .localAddress(new InetSocketAddress(port))
                     //是否开启TCP底层心跳机制，默认2小时,默认关闭
                     .option(ChannelOption.SO_KEEPALIVE,true)
+                    //设置buf分配器,默认池化buf分配器
                     .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
+                    .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
                     //true：立即发送数据(默认true). false:将小的碎片数据连接成更大的报文来最小化所发送报文的数量(相当于开启Nagle算法)
                     .option(ChannelOption.TCP_NODELAY, true)
                     //(5) 添加一个EchoServerHandler到于Channel的 ChannelPipeline  ,配置子通道channel,也就是accept的channel

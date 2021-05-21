@@ -4,7 +4,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.CharsetUtil;
 
 /**
@@ -32,7 +32,7 @@ SimpleChannelInboundHandler 与ChannelInboundHandler
 @Sharable
 //标记该类的实例可以被多个 Channel 共享
 public class EchoClientHandler
-    extends SimpleChannelInboundHandler<ByteBuf> {
+    extends ChannelInboundHandlerAdapter {
     /**
      * 在到服务器的连接已经建立之后将被调用；
      * @param ctx
@@ -51,10 +51,13 @@ public class EchoClientHandler
      * @param in
      */
     @Override
-    public void channelRead0(ChannelHandlerContext ctx, ByteBuf in) {
-        //记录已接收消息的转储
-        System.out.println(
-                "Client received: " + in.toString(CharsetUtil.UTF_8));
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        ByteBuf in = (ByteBuf) msg;
+        int len = in.readableBytes();
+        byte[] arr = new byte[len];
+        in.getBytes(0, arr);
+        System.out.println(("client received: " + new String(arr, "UTF-8")));
+        in.release();
     }
 
     @Override

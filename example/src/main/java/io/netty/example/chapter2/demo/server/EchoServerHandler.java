@@ -1,12 +1,10 @@
 package io.netty.example.chapter2.demo.server;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.util.CharsetUtil;
 
 /**
  * 代码清单 2-1 EchoServerHandler
@@ -22,15 +20,29 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
      * @param msg
      */
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         ByteBuf in = (ByteBuf) msg;
-        while (in.isReadable()){
+        System.out.println(("msg type: " + (in.hasArray()?"堆内存":"直接内存")));
         //将消息记录到控制台
+/*
         System.out.println(
                 "Server received: " + in.toString(CharsetUtil.UTF_8));
-        }
+*/
+
+        int len = in.readableBytes();
+        byte[] arr = new byte[len];
+        in.getBytes(0, arr);
+        System.out.println("server received: " + new String(arr, "UTF-8"));
+
         //将接收到的消息写给发送者，而不冲刷出站消息
-        ctx.write(in);
+//        ctx.write(in);
+
+        //写回数据，异步任务
+        System.out.println("写回前，msg.refCnt:" + ((ByteBuf) msg).refCnt());
+        ChannelFuture f = ctx.writeAndFlush(msg);
+        f.addListener((ChannelFuture futureListener) -> {
+            System.out.println("写回后，msg.refCnt:" + ((ByteBuf) msg).refCnt());
+        });
     }
 
     /**
@@ -43,8 +55,9 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
     public void channelReadComplete(ChannelHandlerContext ctx)
             throws Exception {
         //将未决消息冲刷到远程节点，并且关闭该 Channel
-        ctx.writeAndFlush(Unpooled.EMPTY_BUFFER)
-                .addListener(ChannelFutureListener.CLOSE);
+/*        ctx.writeAndFlush(Unpooled.EMPTY_BUFFER)
+                .addListener(ChannelFutureListener.CLOSE);*/
+        super.channelReadComplete(ctx);
     }
 
     /**
