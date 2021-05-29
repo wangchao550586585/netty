@@ -15,8 +15,6 @@
  */
 package io.netty.handler.codec;
 
-import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -24,6 +22,8 @@ import io.netty.util.internal.ObjectUtil;
 
 import java.nio.ByteOrder;
 import java.util.List;
+
+import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
 
 
 /**
@@ -56,7 +56,9 @@ import java.util.List;
 public class LengthFieldPrepender extends MessageToMessageEncoder<ByteBuf> {
 
     private final ByteOrder byteOrder;
+    //head占用字节数
     private final int lengthFieldLength;
+    //head字段的总长度是否包含长度字段自身的字节数
     private final boolean lengthIncludesLengthFieldLength;
     private final int lengthAdjustment;
 

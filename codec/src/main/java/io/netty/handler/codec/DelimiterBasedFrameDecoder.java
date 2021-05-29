@@ -15,13 +15,13 @@
  */
 package io.netty.handler.codec;
 
-import static io.netty.util.internal.ObjectUtil.checkPositive;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.internal.ObjectUtil;
 
 import java.util.List;
+
+import static io.netty.util.internal.ObjectUtil.checkPositive;
 
 /**
  * A decoder that splits the received {@link ByteBuf}s by one or more
@@ -60,8 +60,11 @@ import java.util.List;
  */
 public class DelimiterBasedFrameDecoder extends ByteToMessageDecoder {
 
+    //分隔符
     private final ByteBuf[] delimiters;
+    //解码数据包最大长度
     private final int maxFrameLength;
+    //解码后数据包是否去掉分隔符.一般是
     private final boolean stripDelimiter;
     private final boolean failFast;
     private boolean discardingTooLongFrame;

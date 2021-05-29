@@ -7,7 +7,7 @@ import io.netty.channel.ChannelPromise;
 import java.net.SocketAddress;
 
 /**
- * create by 尼恩 @ 疯狂创客圈
+ *
  **/
 public class OutHandlerDemo extends ChannelOutboundHandlerAdapter {
     @Override

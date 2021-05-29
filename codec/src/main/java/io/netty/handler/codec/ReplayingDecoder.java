@@ -269,8 +269,11 @@ public abstract class ReplayingDecoder<S> extends ByteToMessageDecoder {
 
     static final Signal REPLAY = Signal.valueOf(ReplayingDecoder.class, "REPLAY");
 
+    //ByteBuf缓冲装饰器类,当读取不到足够字节,异常.然后捕获,等下次IO事件到时读取.
     private final ReplayingDecoderByteBuf replayable = new ReplayingDecoderByteBuf();
+    //保存当前解码器在解码过程中的当前阶段,默认null
     private S state;
+    //读断点指针,当读数据时,一旦可读数据不够,则抛出异常之前,会将读指针还原之前checkPoint.下次读取从checkPoint读取
     private int checkpoint = -1;
 
     /**

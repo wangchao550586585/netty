@@ -1,0 +1,19 @@
+// [开始声明]
+syntax = "proto3";
+//定义protobuf的包名称空间
+package io.netty.example.chapter2.protocol;
+// [结束声明]
+
+// [开始 java 选项配置]  在生成proto文件中消息的pojo类和builder(构造者)的java代码时,将java代码放入指定package
+option java_package = "io.netty.example.chapter2.protocol";
+option java_outer_classname = "MsgProtos"; //在生成proto文件所对应的java代码时,所生成的java外部类的名称.
+// [结束 java 选项配置]
+
+// [开始 消息定义]
+//message定义消息结构体,对应javapojo类
+message Msg {
+  uint32 id = 1;  // Unique ID number for this person.  表示字段类型,字段名,排序位置
+  string content = 2;
+}
+
+// [结束 消息定义]

@@ -15,15 +15,13 @@
  */
 package io.netty.handler.codec;
 
-import static io.netty.util.internal.ObjectUtil.checkNotNull;
-import static io.netty.util.internal.ObjectUtil.checkPositive;
-import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
 
 import java.nio.ByteOrder;
 import java.util.List;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
+import static io.netty.util.internal.ObjectUtil.*;
 
 /**
  * A decoder that splits the received {@link ByteBuf}s dynamically by the
@@ -187,11 +185,16 @@ import io.netty.channel.ChannelHandlerContext;
 public class LengthFieldBasedFrameDecoder extends ByteToMessageDecoder {
 
     private final ByteOrder byteOrder;
+    //发送数据包最大长度
     private final int maxFrameLength;
+    //长度字段偏移量,长度字段位于整个数据包内部的字节数组的下标值
     private final int lengthFieldOffset;
+    //长度字段占用字节数,长度为int,则为4.short则为2
     private final int lengthFieldLength;
     private final int lengthFieldEndOffset;
+    //长度字段偏移量矫正
     private final int lengthAdjustment;
+    //丢弃的起始字节数,如head-content协议中，head存储长度，这个可丢弃
     private final int initialBytesToStrip;
     private final boolean failFast;
     private boolean discardingTooLongFrame;

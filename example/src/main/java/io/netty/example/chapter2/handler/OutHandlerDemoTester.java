@@ -7,7 +7,7 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.embedded.EmbeddedChannel;
 
 /**
- * create by 尼恩 @ 疯狂创客圈
+ *
  **/
 public class OutHandlerDemoTester {
 
